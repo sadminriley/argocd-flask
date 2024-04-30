@@ -1,0 +1,36 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: simple-rollout
+spec:
+  revisionHistoryLimit: 1
+  replicas: 10
+  selector:
+    matchLabels:
+      app: flask-k8s-app
+  template:
+    metadata:
+      labels:
+        app: flask-k8s-app
+    spec:
+      containers:
+      - name: webserver-simple
+        image: docker.io/sadminriley/app-6:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+  strategy:
+    #canary:
+      stableService: flask-k8s-service-stable
+      #canaryService: flask-k8s-service-canary
+      trafficRouting:
+        ambassador:
+          mappings:
+            - flask-k8s-mapping
+      steps:
+      - setWeight: 30
+      - pause: {duration: 35}
+      - setWeight: 60
+      - pause: {duration: 35}
+      - setWeight: 100

@@ -1,0 +1,20 @@
+# Below would be mappings to ingress gatewayvia Ambassador
+---
+apiVersion: getambassador.io/v2
+kind:  Mapping
+metadata:
+  name:  flask-k8s-mapping
+spec:
+  prefix: /
+  service: flask-k8s-service-stable
+  resolver: endpoint
+---
+apiVersion: getambassador.io/v2
+kind:  Mapping
+metadata:
+  name:  flask-k8s-mapping-stable
+spec:
+  prefix: /characters
+  service: flask-k8s-service-stable
+  resolver: endpoint
+
