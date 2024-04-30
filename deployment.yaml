@@ -15,7 +15,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: flaskdemo
+        app: flasktest
     spec:
       containers:
       - image: sadminriley/images:app-6
